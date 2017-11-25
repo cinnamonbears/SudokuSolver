@@ -1,4 +1,6 @@
 import Application.Puzzle;
+import Solver.OneMissingRowStrategy;
+import Solver.Strategy;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -6,10 +8,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    static Puzzle p ;
+    private static Puzzle p ;
 
     public static void main(String[] args) throws IOException {
-        if(args.length < 0) return;
+        if(args[0] == null) return;
         File file = new File(args[0]);
         Scanner input = new Scanner(file);
         List<String> values = new ArrayList<>();
@@ -24,7 +26,14 @@ public class Main {
                 p.setValue(i, j, s);
             }
         }
-        System.out.println(p.isSolved());
+
+        p.printPuzzle();
+        Strategy s = new OneMissingRowStrategy();
+        while(!p.isSolved()){
+            System.out.println("-------------");
+            p = s.solve(p);
+            p.printPuzzle();
+        }
 //        p.printPossibilities();
 //        p.printPuzzle();
 //        p.setValue(0,2,"2");

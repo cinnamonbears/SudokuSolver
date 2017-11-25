@@ -6,8 +6,20 @@ public class Puzzle {
     private List<String> options;
     private String puzzle[][][];
     private int size;
+    private int emptySpaces;
+    private boolean completed;
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 
     public Puzzle(List<String> o, int size){
+        emptySpaces = size * size;
+        completed = false;
         this.size = size;
         options = o;
         puzzle = new String[size][size][size + 1];
@@ -34,6 +46,7 @@ public class Puzzle {
     public void setValue(int i, int j, String v){
         puzzle[i][j][0] = v;
         if(!v.equals("-")){
+            emptySpaces = emptySpaces -1;
             removePossibilitiesForInsert(i, j);
         }
         removePossibilitiesForRow(i, v);
@@ -42,6 +55,10 @@ public class Puzzle {
     }
     public String getValue(int i, int j){
         return puzzle[i][j][0];
+    }
+
+    public String getPossibleValue(int i, int j, int k){
+        return puzzle[i][j][k];
     }
 
     private void removePossibilitiesForInsert(int i, int j){
@@ -107,7 +124,11 @@ public class Puzzle {
             System.out.println();
         }
     }
+/*
 
+Initially Moved this to the strategy for solving, but it didn't work how I wanted it to
+
+ */
     public boolean isSolved(){
         for(int i = 0; i < size; ++i){
             for(int j = 0; j < size; ++j){
