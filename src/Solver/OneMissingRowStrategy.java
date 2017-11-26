@@ -7,9 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OneMissingRowStrategy extends Strategy {
+    private static long duration = 0;
+    private long startTime;
+    private long endTime;
+
+    @Override
+    public Long getDuration() {
+        return duration;
+    }
 
     @Override
     Value findEasiestPossibility(Puzzle p) {
+        startTime = System.nanoTime();
         for(int i = 0; i < p.getSize(); ++i){
             for(int j = 0; j < p.getSize(); ++j){
                 if(p.getValue(i,j).equals("-")) {
@@ -20,12 +29,17 @@ public class OneMissingRowStrategy extends Strategy {
                         }
                     }
                     if(possibleVals.size() == 1){
+
+                        endTime = System.nanoTime();
+                        duration += (endTime - startTime);
                         return new Value(i, j, possibleVals.get(0));
 
                     }
                 }
             }
         }
+        endTime = System.nanoTime();
+        duration += (endTime - startTime);
         return null;
     }
 }

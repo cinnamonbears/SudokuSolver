@@ -17,6 +17,10 @@ public class Puzzle {
         this.completed = completed;
     }
 
+    public int getEmptySpaces() {
+        return emptySpaces;
+    }
+
     public Puzzle(List<String> o, int size){
         emptySpaces = size * size;
         completed = false;

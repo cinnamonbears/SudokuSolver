@@ -5,14 +5,17 @@ import Application.Value;
 
 public abstract class Strategy {
 
-    public final Puzzle solve(Puzzle p){
+    public final Boolean solve(Puzzle p){
         Value val = findEasiestPossibility(p);
         if(val != null){
             addValueToPuzzle(p, val);
+            p.setCompleted(checkForComplete(p));
+            return true;
         }
-        p.setCompleted(checkForComplete(p));
-        return p;
+        return false;
     }
+
+    public abstract Long getDuration();
 
     private void addValueToPuzzle(Puzzle p, Value val) {
         p.setValue(val.getRow(), val.getCol(), val.getVal());
